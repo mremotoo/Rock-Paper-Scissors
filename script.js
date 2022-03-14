@@ -9,37 +9,36 @@ function computerPlay(){
     return(randomAnswer[Math.floor(Math.random() * 3)]);
 };
 
-function playRound(x, y){
-   
-    if(x === "rock"){
-        if(y === "rock"){
-            return("Draw!");
-        }else if(y === "paper"){
-            return("Lose!");
-        }else{
-            return("Win!");
-        }
-    }
+function playRound(x, y) {
+    x = playerPlay(); y = computerPlay();
 
-    if(x === "paper"){
-        if(y === "rock"){
-            return("Win!");
-        }else if(y === "paper"){
-            return("Draw!");
-        }else{
-            return("Lose!");
-        }
-    }
+    return x === "rock" && y === 'scissors' ? "Win!"
+        : x === "rock" && y === 'paper' ? "Lose!"
+        : x === "rock" && y === 'rock' ? "Draw!"
+        
+        : x === "paper" && y === 'scissors' ? "Lose!"
+        : x === "paper" && y === 'paper' ? "Draw!"
+        : x === "paper" && y === 'rock' ? "Win!"
 
-    if(x === "scissors"){
-        if(y === "rock"){
-            return("Lose!");
-        }else if(y === "paper"){
-            return("Win!");
-        }else{
-            return("Draw!");
-        }
-    }
+        : x === "scissors" && y === 'scissors' ? "Draw!"
+        : x === "scissors" && y === 'paper' ? "Win!"
+        : x === "scissors" && y === 'rock' ? "Lose!"
+        : undefined;
+
 }
 
-console.log(playRound(playerPlay(), computerPlay()));
+function game() {
+    
+    for (let i = 0; i < 5; i++) {
+        let round = playRound();
+        console.log(round);
+        
+        
+
+    }
+
+    //condition ? exprIfTrue : exprIfFalse
+
+}
+
+game()
