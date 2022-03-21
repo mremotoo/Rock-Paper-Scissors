@@ -1,7 +1,7 @@
 
-function playerPlay(){
-    let playerAns = prompt("Rock, Paper, or Scissors?").toLowerCase();
-    return(playerAns);
+function playerPlay(e){
+    let playerAns = e.target.innerText.toLowerCase();
+    return playerAns
 }
 
 function computerPlay(){
@@ -9,36 +9,84 @@ function computerPlay(){
     return(randomAnswer[Math.floor(Math.random() * 3)]);
 };
 
-function playRound(x, y) {
-    x = playerPlay(); y = computerPlay();
+function playRound(e, x, y) {
+    x = playerPlay(e); y = computerPlay();
+    let roundWinner = ""
 
-    return x === "rock" && y === 'scissors' ? "Win!"
-        : x === "rock" && y === 'paper' ? "Lose!"
-        : x === "rock" && y === 'rock' ? "Draw!"
+        x === "rock" && y === 'scissors' ? roundWinner = "Win!"
+        : x === "rock" && y === 'paper' ? roundWinner = "Lose!"
+        : x === "rock" && y === 'rock' ? roundWinner = "Draw!"
         
-        : x === "paper" && y === 'scissors' ? "Lose!"
-        : x === "paper" && y === 'paper' ? "Draw!"
-        : x === "paper" && y === 'rock' ? "Win!"
+        : x === "paper" && y === 'scissors' ? roundWinner = "Lose!"
+        : x === "paper" && y === 'paper' ? roundWinner = "Draw!"
+        : x === "paper" && y === 'rock' ? roundWinner = "Win!"
 
-        : x === "scissors" && y === 'scissors' ? "Draw!"
-        : x === "scissors" && y === 'paper' ? "Win!"
-        : x === "scissors" && y === 'rock' ? "Lose!"
+        : x === "scissors" && y === 'scissors' ? roundWinner = "Draw!"
+        : x === "scissors" && y === 'paper' ? roundWinner = "Win!"
+        : x === "scissors" && y === 'rock' ? roundWinner = "Lose!"
         : undefined;
 
+    displayResults(roundWinner)
 }
 
-function game() {
-    
-    for (let i = 0; i < 5; i++) {
-        let round = playRound();
-        console.log(round);
-        
-        
+function displayResults(roundWinner) {
 
+    document.querySelector("h1.roundResult").innerHTML = roundWinner;
+
+    if (roundWinner === "Win!") {
+        document.querySelector("h2.playerScore").innerHTML++;
+    } else if(roundWinner === "Lose!"){
+        document.querySelector("h2.cpuScore").innerHTML++;
+    }else {
+        return;
     }
 
-    //condition ? exprIfTrue : exprIfFalse
-
+    announceWinner()
 }
 
-game()
+function announceWinner() {
+    let playerScore = +document.querySelector("h2.playerScore").innerHTML;
+    let cpuScore = +document.querySelector("h2.cpuScore").innerHTML;
+    let gameWinner = "";
+
+
+    if (playerScore === 5) {
+        gameWinner = "You win!"
+        let body = document.querySelector("body")
+        let h1Winner = document.createElement("h1")
+        h1Winner.textContent = gameWinner
+        body.append(h1Winner)
+        selects.forEach(btnSelect => {btnSelect.disabled = true})
+
+    } else if(cpuScore === 5){
+        gameWinner = "Computer wins!"
+        let body = document.querySelector("body")
+        let h1Winner = document.createElement("h1")
+        h1Winner.textContent = gameWinner
+        body.append(h1Winner)
+        selects.forEach(btnSelect => {btnSelect.disabled = true})
+    }else {
+        return
+    }
+
+    // resetGame()
+}
+
+
+
+const selects = document.querySelectorAll('.btnSelect')
+selects.forEach(btnSelect => btnSelect.addEventListener('click', playRound))
+
+// function game() {
+    
+//     for (let i = 0; i < 5; i++) {
+//         let round = playRound();
+//         console.log(round);
+        
+        
+
+//     }
+
+//     //condition ? exprIfTrue : exprIfFalse
+
+// }
